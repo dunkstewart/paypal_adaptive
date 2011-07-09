@@ -6,9 +6,8 @@ require 'config'
 module PaypalAdaptive
   class IpnNotification
     
-    def initialize(env=nil)
-      @env = env
-      @@config ||= PaypalAdaptive::Config.new(@env)
+    def initialize
+      @@config ||= PaypalAdaptive::Config.new
       @@paypal_base_url ||= @@config.paypal_base_url
       @@ssl_cert_path ||= @@config.ssl_cert_path
       @@ssl_cert_file ||= @@config.ssl_cert_file

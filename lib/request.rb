@@ -10,8 +10,7 @@ module PaypalAdaptive
 
   class Request
     def initialize(env = nil)
-      @env = env
-      @@config ||= PaypalAdaptive::Config.new(@env)
+      @@config ||= PaypalAdaptive::Config.new
       @@api_base_url ||= @@config.api_base_url
       @@headers ||= @@config.headers
       @@ssl_cert_path ||= @@config.ssl_cert_path
@@ -31,14 +30,14 @@ module PaypalAdaptive
       raise NoDataError unless data
 
       response_data = call_api(data, "/AdaptivePayments/Pay")
-      PaypalAdaptive::Response.new(response_data, @env)
+      PaypalAdaptive::Response.new(response_data)
     end
 
     def set_payment_options(data)
       raise NoDataError unless data
 
       response_data = call_api(data, "/AdaptivePayments/SetPaymentOptions")
-      PaypalAdaptive::Response.new(response_data, @env)
+      PaypalAdaptive::Response.new(response_data)
     end
 
     def payment_details(data)
@@ -51,7 +50,7 @@ module PaypalAdaptive
       raise NoDataError unless data
 
       response_data = call_api(data, "/AdaptivePayments/Preapproval")
-      PaypalAdaptive::Response.new(response_data, @env)
+      PaypalAdaptive::Response.new(response_data)
     end
 
     def preapproval_details(data)

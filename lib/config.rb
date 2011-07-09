@@ -15,21 +15,22 @@ module PaypalAdaptive
     } unless defined? API_BASE_URL_MAPPING
 
     attr_accessor :config_filepath, :paypal_base_url, :api_base_url, :headers, :ssl_cert_path, :ssl_cert_file
+    
+    class << self
+      attr_accessor :env
+    end
   
-    def initialize(env=nil, config_override=nil)
-      if env
-        #non-rails env
-        @config_filepath = File.join(File.dirname(__FILE__), "..", "config", "paypal_adaptive.yml")
-        load(env, config_override)
-      else
+    def initialize
+      if defined? Rails
         @config_filepath = File.join(Rails.root, "config", "paypal_adaptive.yml")
-        load(Rails.env, config_override)
+      else
+        @config_filepath = File.join(File.dirname(__FILE__), "..", "config", "paypal_adaptive.yml")
       end
+      load
     end
 
-    def load(rails_env, config_override)
-      config = YAML.load_file(@config_filepath)[rails_env]
-      config.merge!(config_override) unless config_override.nil?
+    def load
+      config = YAML.load_file(@config_filepath)[Config.env]
 
       if config["retain_requests_for_test"] == true
         @retain_requests_for_test = true
