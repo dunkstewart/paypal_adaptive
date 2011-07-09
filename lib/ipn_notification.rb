@@ -27,8 +27,8 @@ module PaypalAdaptive
       resp, response_data = http.post(path, data)
       
       case resp
-        when 
-          Net::HTTPSuccess then @verified = response_data == "VERIFIED"
+        when Net::HTTPSuccess
+           @verified = response_data == "VERIFIED"
         else
           resp.error!
       end

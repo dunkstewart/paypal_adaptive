@@ -90,7 +90,12 @@ module PaypalAdaptive
 
       resp, response_data = http.post(path, api_request_data, @@headers)
 
-      JSON.parse(response_data)
+      case resp
+        when Net::HTTPSuccess
+          JSON.parse(response_data)
+        else
+          resp.error!
+      end
     end
   end
 
