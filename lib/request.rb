@@ -32,7 +32,13 @@ module PaypalAdaptive
       response_data = call_api(data, "/AdaptivePayments/Pay")
       PaypalAdaptive::Response.new(response_data)
     end
+    
+    def execute_payment(data)
+      raise NoDataError unless data
 
+      call_api(data, "/AdaptivePayments/ExecutePayment")
+    end
+    
     def set_payment_options(data)
       raise NoDataError unless data
 
