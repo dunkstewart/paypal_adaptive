@@ -3,10 +3,11 @@ require 'config'
 require 'net/http'
 require 'net/https'
 require 'response'
+require 'pay_response'
+require 'preapproval_response'
 
 module PaypalAdaptive
-  class NoDataError < Exception
-  end
+  class NoDataError < Exception; end
 
   class Request
     def initialize(env = nil)
@@ -30,14 +31,14 @@ module PaypalAdaptive
       raise NoDataError unless data
 
       response_data = call_api(data, "/AdaptivePayments/Pay")
-      PaypalAdaptive::Response.new(response_data)
+      PaypalAdaptive::PayResponse.new(response_data)
     end
     
     def execute_payment(data)
       raise NoDataError unless data
 
       response_data = call_api(data, "/AdaptivePayments/ExecutePayment")
-      PaypalAdaptive::Response.new(response_data)
+      PaypalAdaptive::PayResponse.new(response_data)
     end
     
     def set_payment_options(data)
@@ -58,7 +59,7 @@ module PaypalAdaptive
       raise NoDataError unless data
 
       response_data = call_api(data, "/AdaptivePayments/Preapproval")
-      PaypalAdaptive::Response.new(response_data)
+      PaypalAdaptive::PreapprovalResponse.new(response_data)
     end
 
     def preapproval_details(data)
