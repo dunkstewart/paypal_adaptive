@@ -1,6 +1,6 @@
 module PaypalAdaptive
   class PayResponse < Response
-    class PaymentExecError < StandardError; end
+    class PaymentExecError < Response::PaypalError; end
     
     def pay_key
       self['payKey']

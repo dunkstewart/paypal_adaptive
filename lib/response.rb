@@ -1,8 +1,8 @@
 module PaypalAdaptive
   class Response < Hash    
-    class SystemError < StandardError; end
-    class InternalError < StandardError; end
     class PaypalError < StandardError; end
+    class SystemError < PaypalError; end
+    class InternalError < PaypalError; end
 
     def initialize(response)
       @@config ||= PaypalAdaptive::Config.new
