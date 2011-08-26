@@ -30,7 +30,7 @@ module PaypalAdaptive
     end
 
     def load
-      config = YAML.load_file(@config_filepath)[Config.env]
+      config = YAML.load_file(@config_filepath)[Config.env || 'staging']
 
       if config["retain_requests_for_test"] == true
         @retain_requests_for_test = true
